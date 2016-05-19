@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css">
+</head>
+<style>
+	body {
+		background-color: #efefef;
+	}
+	.dock {
+		width: 960px;
+		height: 98vh;
+		overflow: hidden;
+		margin: 0 auto;
+		position: relative;
+		border-bottom: 10px solid #000;
+	}
+	.dock-inner {
+		list-style-type: none;
+		width: 100%;
+		text-align: center;
+		position: absolute;
+		bottom: 0;
+		padding: 0;
+	}
+	.dock-inner li {
+		display: inline;
+	}
+	.dock-item i {
+		font-size: 3em;
+		border-top: 0;
+		-webkit-transition: 0.5s;
+		-o-transition: 0.5s;
+		transition: 0.5s;
+	}
+	.medium i {
+		font-size: 5em;
+	}
+	.large i {
+		font-size: 7.5em;
+		margin: 0 10px;
+	}
+	.small i {
+		font-size: 3em;
+	}
+</style>
+<body>
+	<div class="dock">
+		<ul class="dock-inner">
+			<li id="dock-item-1" class="dock-item"><i class="fa fa-facebook-official"></i></li>
+			<li id="dock-item-2" class="dock-item"><i class="fa fa-twitter-square"></i></li>
+			<li id="dock-item-3" class="dock-item"><i class="fa fa-pinterest"></i></li>
+			<li id="dock-item-4" class="dock-item"><i class="fa fa-instagram"></i></li>
+			<li id="dock-item-5" class="dock-item"><i class="fa fa-tumblr"></i></li>
+			<li id="dock-item-6" class="dock-item"><i class="fa fa-github-alt"></i></li>
+			<li id="dock-item-7" class="dock-item"><i class="fa fa-chrome"></i></li>
+			<li id="dock-item-8" class="dock-item"><i class="fa fa-linkedin"></i></li>
+			<li id="dock-item-9" class="dock-item"><i class="fa fa-youtube"></i></li>
+		</ul>
+	</div>
+	<script >
+	var dockItems = [
+		"dock-item-1",
+		"dock-item-2",
+		"dock-item-3",
+		"dock-item-4",
+		"dock-item-5",
+		"dock-item-6",
+		"dock-item-7",
+		"dock-item-8",
+		"dock-item-9"
+	]
+		$(document).ready(function() {
+	        $(".dock-item").hover(function() {
+	        	var index = dockItems.indexOf($(this).attr('id'));	        	
+	        	var currentItem = dockItems[index]
+	        	var nextItem = dockItems[index+1]
+	        	var prevItem = dockItems[index-1]
+	        	var all = "#"+currentItem+", #"+nextItem+", #"+prevItem
+    			$(".dock-item").removeClass("large medium small")
+    	    	$("#"+currentItem).addClass("large")
+    	    	$("#"+nextItem+", #"+prevItem).addClass("medium")
+
+	        })
+	        $(".dock-item").mouseleave(function() {
+	            var index = dockItems.indexOf($(this).attr('id'));	        	
+	        	var currentItem = dockItems[index];
+	        	var nextItem = dockItems[index+1];
+	        	var prevItem = dockItems[index-1];
+	        	var all = "#"+currentItem+", #"+nextItem+", #"+prevItem;
+	        		$(all).addClass("small");
+	        })
+	        $(".dock").mouseleave(function() {
+	        	$(".dock-item").addClass("small");
+	        	setTimeout(function () {
+	        		$(".dock-item").removeClass("large medium small");	
+	            }, 500)
+
+	        })
+	    })
+	</script>
+</body>
+</html>
