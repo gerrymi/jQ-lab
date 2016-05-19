@@ -30,73 +30,67 @@
 		display: inline;
 	}
 	.dock-item i {
+		color: #777;
+		line-height: 20px;
 		font-size: 3em;
 		border-top: 0;
 		-webkit-transition: 0.5s;
 		-o-transition: 0.5s;
 		transition: 0.5s;
 	}
+	.small i {
+		color: #555;
+		font-size: 4em;
+	}
 	.medium i {
+		color: #333;
 		font-size: 5em;
 	}
 	.large i {
+		color: #000;
 		font-size: 7.5em;
 		margin: 0 10px;
 	}
-	.small i {
+	.down i {
 		font-size: 3em;
 	}
 </style>
 <body>
 	<div class="dock">
 		<ul class="dock-inner">
-			<li id="dock-item-1" class="dock-item"><i class="fa fa-facebook-official"></i></li>
-			<li id="dock-item-2" class="dock-item"><i class="fa fa-twitter-square"></i></li>
-			<li id="dock-item-3" class="dock-item"><i class="fa fa-pinterest"></i></li>
-			<li id="dock-item-4" class="dock-item"><i class="fa fa-instagram"></i></li>
-			<li id="dock-item-5" class="dock-item"><i class="fa fa-tumblr"></i></li>
-			<li id="dock-item-6" class="dock-item"><i class="fa fa-github-alt"></i></li>
-			<li id="dock-item-7" class="dock-item"><i class="fa fa-chrome"></i></li>
-			<li id="dock-item-8" class="dock-item"><i class="fa fa-linkedin"></i></li>
-			<li id="dock-item-9" class="dock-item"><i class="fa fa-youtube"></i></li>
+			<li id="dock-end"></li>
+			<li id="facebook" class="dock-item"><i class="fa fa-facebook-official"></i></li>
+			<li id="twitter" class="dock-item"><i class="fa fa-twitter-square"></i></li>
+			<li id="pinterest" class="dock-item"><i class="fa fa-pinterest"></i></li>
+			<li id="instagram" class="dock-item"><i class="fa fa-instagram"></i></li>
+			<li id="tumblr" class="dock-item"><i class="fa fa-tumblr"></i></li>
+			<li id="github" class="dock-item"><i class="fa fa-github-alt"></i></li>
+			<li id="chrome" class="dock-item"><i class="fa fa-chrome"></i></li>
+			<li id="linkedin" class="dock-item"><i class="fa fa-linkedin"></i></li>
+			<li id="youtube" class="dock-item"><i class="fa fa-youtube"></i></li>
+			<li id="dock-end"></li>
 		</ul>
 	</div>
 	<script >
-	var dockItems = [
-		"dock-item-1",
-		"dock-item-2",
-		"dock-item-3",
-		"dock-item-4",
-		"dock-item-5",
-		"dock-item-6",
-		"dock-item-7",
-		"dock-item-8",
-		"dock-item-9"
-	]
+		var children = $(".dock-inner").children();
 		$(document).ready(function() {
+			$(".dock-item").click(function() {
+				console.log()
+			})	
 	        $(".dock-item").hover(function() {
-	        	var index = dockItems.indexOf($(this).attr('id'));	        	
-	        	var currentItem = dockItems[index]
-	        	var nextItem = dockItems[index+1]
-	        	var prevItem = dockItems[index-1]
-	        	var all = "#"+currentItem+", #"+nextItem+", #"+prevItem
-    			$(".dock-item").removeClass("large medium small")
-    	    	$("#"+currentItem).addClass("large")
-    	    	$("#"+nextItem+", #"+prevItem).addClass("medium")
+    			$(".dock-item").removeClass("large medium small down")
+    	    	$("#"+children[$(this).index()].id).addClass("large")
+    	    	$("#"+children[$(this).index()+1].id+", #"+children[$(this).index()-1].id).addClass("medium")
+    	    	$("#"+children[$(this).index()+2].id+", #"+children[$(this).index()-2].id).addClass("small")
 
 	        })
 	        $(".dock-item").mouseleave(function() {
-	            var index = dockItems.indexOf($(this).attr('id'));	        	
-	        	var currentItem = dockItems[index];
-	        	var nextItem = dockItems[index+1];
-	        	var prevItem = dockItems[index-1];
-	        	var all = "#"+currentItem+", #"+nextItem+", #"+prevItem;
-	        		$(all).addClass("small");
+	        		$(".dock-item").addClass("down");
 	        })
 	        $(".dock").mouseleave(function() {
-	        	$(".dock-item").addClass("small");
+	        	$(".dock-item").addClass("down");
 	        	setTimeout(function () {
-	        		$(".dock-item").removeClass("large medium small");	
+	        		$(".dock-item").removeClass("large medium small down");	
 	            }, 500)
 
 	        })
