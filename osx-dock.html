@@ -12,19 +12,26 @@
 	}
 	.dock {
 		width: 960px;
-		height: 98vh;
+		top: 77vh;
+		height: 20vh;
 		overflow: hidden;
 		margin: 0 auto;
+		border-bottom: 10px solid #777;
 		position: relative;
-		border-bottom: 10px solid #000;
 	}
 	.dock-inner {
 		list-style-type: none;
 		width: 100%;
 		text-align: center;
 		position: absolute;
-		bottom: 0;
+		bottom: -10vh;
 		padding: 0;
+		-webkit-transition: 0.5s;
+		-o-transition: 0.5s;
+		transition: 0.5s;: 
+	}
+	.dock:hover .dock-inner {
+		bottom: 0vh;
 	}
 	.dock-inner li {
 		display: inline;
@@ -52,6 +59,7 @@
 		margin: 0 10px;
 	}
 	.down i {
+		color: #777;
 		font-size: 3em;
 	}
 </style>
@@ -87,7 +95,7 @@
 	        $(".dock-item").mouseleave(function() {
 	        		$(".dock-item").addClass("down");
 	        })
-	        $(".dock").mouseleave(function() {
+	        $(".dock-inner").mouseleave(function() {
 	        	$(".dock-item").addClass("down");
 	        	setTimeout(function () {
 	        		$(".dock-item").removeClass("large medium small down");	
