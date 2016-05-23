@@ -26,9 +26,9 @@
 		position: absolute;
 		bottom: -10vh;
 		padding: 0;
-		-webkit-transition: 0.5s;
-		-o-transition: 0.5s;
-		transition: 0.5s;: 
+		-webkit-transition: 0.2s ease;
+		-o-transition: 0.2s ease;
+		transition: 0.2s ease;: 
 	}
 	.dock:hover .dock-inner {
 		bottom: 0vh;
@@ -41,9 +41,9 @@
 		line-height: 20px;
 		font-size: 3em;
 		border-top: 0;
-		-webkit-transition: 0.5s;
-		-o-transition: 0.5s;
-		transition: 0.5s;
+		-webkit-transition: 0.2s ease;
+		-o-transition: 0.2s ease;
+		transition: 0.2s ease;
 	}
 	.small i {
 		color: #555;
@@ -62,6 +62,33 @@
 		color: #777;
 		font-size: 3em;
 	}
+	#facebook i {
+		color: #3b5998;
+	}
+	#twitter i {
+		color: #00aced;
+	}
+	#pinterest i {
+		color: #cb2027;
+	}
+	#instagram i {
+		color: #517fa4;
+	}
+	#tumblr i {
+		color: #32506d;
+	}
+	#github i {
+		color: #333333;
+	}
+	#dribbble i {
+		color: #ea4c89;
+	}
+	#linkedin i {
+		color: #007bb6;
+	}
+	#youtube i {
+		color: #bb0000;
+	}
 </style>
 <body>
 	<div class="dock">
@@ -73,7 +100,7 @@
 			<li id="instagram" class="dock-item"><i class="fa fa-instagram"></i></li>
 			<li id="tumblr" class="dock-item"><i class="fa fa-tumblr"></i></li>
 			<li id="github" class="dock-item"><i class="fa fa-github-alt"></i></li>
-			<li id="chrome" class="dock-item"><i class="fa fa-chrome"></i></li>
+			<li id="dribbble" class="dock-item"><i class="fa fa-dribbble"></i></li>
 			<li id="linkedin" class="dock-item"><i class="fa fa-linkedin"></i></li>
 			<li id="youtube" class="dock-item"><i class="fa fa-youtube"></i></li>
 			<li id="dock-end"></li>
@@ -90,7 +117,6 @@
     	    	$("#"+children[$(this).index()].id).addClass("large")
     	    	$("#"+children[$(this).index()+1].id+", #"+children[$(this).index()-1].id).addClass("medium")
     	    	$("#"+children[$(this).index()+2].id+", #"+children[$(this).index()-2].id).addClass("small")
-
 	        })
 	        $(".dock-item").mouseleave(function() {
 	        		$(".dock-item").addClass("down");
@@ -99,8 +125,7 @@
 	        	$(".dock-item").addClass("down");
 	        	setTimeout(function () {
 	        		$(".dock-item").removeClass("large medium small down");	
-	            }, 500)
-
+	            }, 200)
 	        })
 	    })
 	</script>
