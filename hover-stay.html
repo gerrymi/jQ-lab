@@ -43,28 +43,39 @@
 
 	<script>
 		$(document).ready(function() {
-			var timer = 0
-			var msg = ["6 Secs","Easy Money!","Ha!","Got eeeem!","K,","bai!"]
-			$(".noti-inner span").text(msg[timer]);
+			var timer = 6
+			var msg = [
+						"bai!",
+						"K,",
+						"Got eeeem!",
+						"Ha!",
+						"Easy Money!",
+						"6 Secs"
+					  ]				
+			$(".noti-inner span").text(timer);
 			setInterval(function(){
 				var paused = $(".noti").hasClass("pause")
-				if (!paused) {
-					if (timer < 6) {
-						timer++
-						$(".noti-inner span").text(msg[timer]);
-					} else {
-						$(".noti").fadeOut(500);
-						setTimeout(function () {
-							$(".noti").remove();
-					    }, 500)
-
-					}
+				if (timer > 0) {
+					timer--
+					$(".noti-inner span").text(timer);
+				} else if (timer <=2 && paused) {
+					timer = 2;
+					$(".noti-inner span").text(timer);
+				} else {
+					$(".noti").fadeOut(500);
+					setTimeout(function () {
+						$(".noti").remove();
+				    }, 500)
 				}
 			}, 1000);
 			$(".noti").hover(function(){
 				$(this).addClass("pause")
 			})
 			$(".noti").mouseleave(function(){
+				if (timer <= 2) {
+					timer = 2
+					$(".noti-inner span").text(timer);
+				}
 				$(this).removeClass("pause")
 			})
 	    })
