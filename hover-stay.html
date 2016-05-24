@@ -9,49 +9,55 @@
 <style>
 	body {
 		background-color: #efefef;
+		font-family: sans-serif;
 	}
 	.noti {
 		position: absolute;
-		top: 150px;
-		left: 50%;
-		width: 400px;
 		height: 100px;
+		top: 35vh;
+		width: 100%;
+		text-align: center;
 	}
 	.noti-inner {
-		background-color: #bbb;
-		text-align: center;
+	    color: #fff;
+	    width: 300px;
+	    margin: 0 auto;
+	    background-color: #5bc0de;
+	    border: 2px solid #46b8da;
+	    border-radius: 10px;
 		position: relative;
-		left: -50%;
 		padding: 10px;
 	}
-	.noti::after, .noti.pause::after {
-		text-align: right;
-		width: 100%;
-	}
 	.noti.pause::after {
-		content: "paused";
+		content: "(paused)";
+		line-height: 50px;
+		color: #aaa;
 	}
 	</style>
 <body>
 	<div class="noti">
 		<div class="noti-inner">
-			<h1>Hello, World!</h1><h2>_</h2>
+			<h1>Hello, World!</h1><span>_</span>
 		</div>
 	</div>
 
 	<script>
 		$(document).ready(function() {
-			var timer = 6
-			$("h2").text(timer);
+			var timer = 0
+			var msg = ["6 Secs","Easy Money!","Ha!","Got eeeem!","K,","bai!"]
+			$(".noti-inner span").text(msg[timer]);
 			setInterval(function(){
 				var paused = $(".noti").hasClass("pause")
 				if (!paused) {
-					if (timer > 0) {
-						timer--
-						console.log(timer)
-						$("h2").text(timer);
+					if (timer < 6) {
+						timer++
+						$(".noti-inner span").text(msg[timer]);
 					} else {
-						$(".noti").remove();
+						$(".noti").fadeOut(500);
+						setTimeout(function () {
+							$(".noti").remove();
+					    }, 500)
+
 					}
 				}
 			}, 1000);
