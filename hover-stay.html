@@ -55,17 +55,19 @@
 			$(".noti-inner span").text(timer);
 			setInterval(function(){
 				var paused = $(".noti").hasClass("pause")
-				if (timer > 0) {
-					timer--
-					$(".noti-inner span").text(timer);
-				} else if (timer <=2 && paused) {
-					timer = 2;
-					$(".noti-inner span").text(timer);
-				} else {
-					$(".noti").fadeOut(500);
-					setTimeout(function () {
-						$(".noti").remove();
-				    }, 500)
+				if (timer > 2 || !paused){
+					if (timer > 0) {
+						timer--
+						$(".noti-inner span").text(timer);
+					} else if (timer <=2 && paused) {
+						timer = 2;
+						$(".noti-inner span").text(timer);
+					} else {
+						$(".noti").fadeOut(500);
+						setTimeout(function () {
+							$(".noti").remove();
+					    }, 500)
+					}	
 				}
 			}, 1000);
 			$(".noti").hover(function(){
