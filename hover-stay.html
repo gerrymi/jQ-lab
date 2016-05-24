@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css">
+</head>
+<style>
+	body {
+		background-color: #efefef;
+	}
+	.noti {
+		position: absolute;
+		top: 150px;
+		left: 50%;
+		width: 400px;
+		height: 100px;
+	}
+	.noti-inner {
+		background-color: #bbb;
+		text-align: center;
+		position: relative;
+		left: -50%;
+		padding: 10px;
+	}
+	.noti::after, .noti.pause::after {
+		text-align: right;
+		width: 100%;
+	}
+	.noti.pause::after {
+		content: "paused";
+	}
+	</style>
+<body>
+	<div class="noti">
+		<div class="noti-inner">
+			<h1>Hello, World!</h1><h2>_</h2>
+		</div>
+	</div>
+
+	<script>
+		$(document).ready(function() {
+			var timer = 6
+			$("h2").text(timer);
+			setInterval(function(){
+				var paused = $(".noti").hasClass("pause")
+				if (!paused) {
+					if (timer > 0) {
+						timer--
+						console.log(timer)
+						$("h2").text(timer);
+					} else {
+						$(".noti").remove();
+					}
+				}
+			}, 1000);
+			$(".noti").hover(function(){
+				$(this).addClass("pause")
+			})
+			$(".noti").mouseleave(function(){
+				$(this).removeClass("pause")
+			})
+	    })
+	</script>
+	<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
+</body>
+</html>
