@@ -8,78 +8,143 @@
 </head>
 <style>
 	body {
+		margin: 0;
 		background-color: #efefef;
 		font-family: sans-serif;
 	}
-	.noti {
-		position: absolute;
-		height: 100px;
-		top: 35vh;
-		width: 100%;
-		text-align: center;
-	}
-	.noti-inner {
-	    color: #fff;
-	    width: 300px;
-	    margin: 0 auto;
+	.button {
+		margin: 20px;
+		padding: 10px;
 	    background-color: #5bc0de;
 	    border: 2px solid #46b8da;
 	    border-radius: 10px;
+		color: #fff;-webkit-transition: ease 0.5s;
+		-o-transition: ease 0.5s;
+		transition: ease 0.5s;
+	}
+	.button:hover {
+	    background-color: #71c8e3;
+	    border: 2px solid #5bc0de;
+	}
+	.button:focus {
+		outline: 0;
+	}
+	.noti-container {
+		width: 300px;
+		position: absolute;
+		top: 20px;
+		right: 20px;
+	}
+	.noti {
+	    z-index: 1;
+	    width: 300px;
+	    overflow: hidden;
 		position: relative;
+	    float: right;
+	    color: #fff;
+	    background-color: #5bc0de;
 		padding: 10px;
+	    border: 2px solid #46b8da;
+	    border-radius: 10px;
+	    margin-bottom: 10px;
+	    -webkit-transition: ease 1.5s;
+	    -o-transition: ease 1.5s;
+	    transition: ease 1.5s;
+	}
+	.noti.pause {
+		background-color: #9cd9eb;
 	}
 	.noti.pause::after {
-		content: "(paused)";
-		line-height: 50px;
-		color: #aaa;
+		content: 'paused';
+		position: absolute;
+		top: 10px;
+		right: 10px;
+	}
+	.noti.leave {
+		z-index: -1;
+		-webkit-transform: translate(0, -150px);
+		-ms-transform: translate(0, -150px);
+		-o-transform: translate(0, -150px);
+		transform: translate(0, -150px);
+		opacity: 0;
 	}
 	</style>
 <body>
-	<div class="noti">
-		<div class="noti-inner">
-			<h1>Hello, World!</h1><span>_</span>
-		</div>
+	<button class="button"><h1>GIVE ME FRIENDS!</h1></button>
+	<div class="noti-container">
+
 	</div>
 
 	<script>
+		var getPerson = function() {
+			var jqXHR = []
+			jqXHR.push ($.ajax({
+			  url: 'https://randomuser.me/api/',
+			  dataType: 'json',
+			  async: false
+			}))
+			return jqXHR[0].responseJSON.results[0];
+		}
+		var notiList = [];
+		var notiCount = 0;
+		var Noti = function() {
+			this.id = notiCount;
+			this.name = getPerson().name.first;
+			this.shown = false;
+			this.expire = function() {
+				var timer = 3
+				var id = this.id
+				var clear = 0
+				clear = setInterval(function() {
+					if (timer > 2 || !( $('#noti-'+id).hasClass("pause") )) {
+						if (timer > 1) {
+							timer -- ;
+							console.log (id+" "+timer);
+						} else if (timer <= 2 && ( $('#noti-'+id).hasClass("pause") )) {
+							console.log ('paused')
+						} else {
+							$('#noti-'+id).addClass('leave');
+							setTimeout(function() {
+								$('#noti-'+id).remove();
+							},1500)
+							clearInterval(clear)
+							console.log('remove')
+						};
+					}
+				}, 1000)
+				$('#noti-'+id).hover(function(){
+					$(this).addClass('pause')
+				})
+				$('#noti-'+id).mouseleave(function(){
+					if (timer <= 2) {
+						timer = 2
+					}
+					$('#noti-'+id).removeClass('pause')
+				})
+			}
+		}
 		$(document).ready(function() {
-			var timer = 6
-			var msg = [
-						"bai!",
-						"K,",
-						"Got eeeem!",
-						"Ha!",
-						"Easy Money!",
-						"6 Secs"
-					  ]				
-			$(".noti-inner span").text(msg[timer]);
-			setInterval(function(){
-				var paused = $(".noti").hasClass("pause")
-				if (timer > 2 || !paused){
-					if (timer > 0) {
-						timer--
-						$(".noti-inner span").text(msg[timer]);
-					} else if (timer <=2 && paused) {
-						timer = 2;
-						$(".noti-inner span").text(msg[timer]);
-					} else {
-						$(".noti").fadeOut(500);
-						setTimeout(function () {
-							$(".noti").remove();
-					    }, 500)
-					}	
-				}
-			}, 1000);
-			$(".noti").hover(function(){
-				$(this).addClass("pause")
+			$('.button').click(function(){
+				notiList.push(new Noti());
+				console.log(notiList[notiCount]);
+				notiCount++;
 			})
-			$(".noti").mouseleave(function(){
-				if (timer <= 2) {
-					timer = 2
-					$(".noti-inner span").text(msg[timer]);
+			setInterval(function() {
+				if ($('.noti-container').children().length < 3 && notiList.length > 0){
+					for (i=0;i<notiList.length; i++) {
+						if ($('.noti-container').children().length < 3 && !notiList[i].shown){
+							var notiId = notiList[i].id
+							$('.noti-container').append('<div id="noti-'+notiList[i].id+'" class="noti"><h1>'+notiList[i].name+'</h1></div>');
+							$('#noti-'+notiList[i].id).click(function() {
+								$(this).remove();
+							})
+							notiList[i].shown = true;
+							notiList[i].expire()
+							// expire("#noti-"+notiList[i].id)
+						}
+					}
 				}
-				$(this).removeClass("pause")
-			})
+			}, 500)
 	    })
 	</script>
 	<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
