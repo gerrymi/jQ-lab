@@ -21,36 +21,31 @@
 		border-left: 1px solid #f00;
 	}
 	.level-0 {
-		padding: 5px;
-		padding-left: 20px;
+		padding: 20px 5px 5px 20px;
 		margin-bottom: -1px;
 		color: #000;
 		font-size: 20px !important;
 	}
 	.level-1 {
-		padding: 5px;
-		padding-left: 20px;
+		padding: 20px 5px 5px 20px;
 		margin-bottom: -1px;
 		color: #222;
 		font-size: 18px !important;
 	}
 	.level-2 {
-		padding: 5px;
-		padding-left: 20px;
+		padding: 20px 5px 5px 20px;
 		margin-bottom: -1px;
 		color: #444;
 		font-size: 16px !important;
 	}
 	.level-3 {
-		padding: 5px;
-		padding-left: 20px;
+		padding: 20px 5px 5px 20px;
 		margin-bottom: -1px;
 		color: #666;
 		font-size: 14px !important;
 	}
 	.level-4 {
-		padding: 5px;
-		padding-left: 20px;
+		padding: 20px 5px 5px 20px;
 		margin-bottom: -1px;
 		color: #88c;
 		font-size: 12px !important;
@@ -175,27 +170,8 @@
 		};
     	$(document).ready(function(){
     		$('body').children('dl').each(function() {
-    			$(this).deepest().first().before("<br>")
     			var level = $(this).find('dd').length
-    			switch(level) {
-    			    case 0:
-    			        $(this).deepest().closest('dd').addClass('level-'+level)
-    			        break;
-    			    case 1:
-    			        $(this).deepest().closest('dd').addClass('level-'+level)
-    			        break;
-    			    case 2:
-    			        $(this).deepest().closest('dd').addClass('level-'+level)
-    			        break;
-    			    case 3:
-    			        $(this).deepest().closest('dd').addClass('level-'+level)
-    			        break;
-    			    case 4:
-    			        $(this).deepest().closest('dd').addClass('level-'+level)
-    			        break;
-    			    default:
-    			        $(this).deepest().closest('dd').addClass('default')
-    			}
+    			$(this).deepest().closest('dd').addClass('level-'+level)
     		})
     	})
     </script>
