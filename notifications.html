@@ -38,6 +38,7 @@
 	.noti {
 	    z-index: 1;
 	    width: 300px;
+	    height: 100px;
 	    overflow: hidden;
 		position: relative;
 	    float: right;
@@ -62,10 +63,7 @@
 	}
 	.noti.leave {
 		z-index: -1;
-		-webkit-transform: translate(0, -150px);
-		-ms-transform: translate(0, -150px);
-		-o-transform: translate(0, -150px);
-		transform: translate(0, -150px);
+		margin-top: -150px;
 		opacity: 0;
 	}
 	</style>
@@ -106,7 +104,7 @@
 							$('#noti-'+id).addClass('leave');
 							setTimeout(function() {
 								$('#noti-'+id).remove();
-							},1500)
+							},1400)
 							clearInterval(clear)
 							console.log('remove')
 						};
