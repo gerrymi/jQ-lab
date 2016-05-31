@@ -100,6 +100,7 @@
 							console.log (id+" "+timer);
 						} else if (timer <= 2 && ( $('#noti-'+id).hasClass("pause") )) {
 							console.log ('paused')
+							timer = 2
 						} else {
 							$('#noti-'+id).addClass('leave');
 							setTimeout(function() {
@@ -121,6 +122,10 @@
 				})
 			}
 		}
+		var unShown = notiList.filter(function(noti) {
+			return noti.shown === false
+		})
+		console.log(unShown)
 		$(document).ready(function() {
 			$('.button').click(function(){
 				notiList.push(new Noti());
