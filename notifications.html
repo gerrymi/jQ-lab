@@ -90,17 +90,15 @@
 			this.name = getPerson().name.first;
 			this.shown = false;
 			this.expire = function() {
-				var timer = 3
+				var timer = 6
 				var id = this.id
-				var clear = 0
-				clear = setInterval(function() {
+				var clear = setInterval(function() {
 					if (timer > 2 || !( $('#noti-'+id).hasClass("pause") )) {
-						if (timer > 1) {
+						if (timer > 0) {
 							timer -- ;
 							console.log (id+" "+timer);
 						} else if (timer <= 2 && ( $('#noti-'+id).hasClass("pause") )) {
 							console.log ('paused')
-							timer = 2
 						} else {
 							$('#noti-'+id).addClass('leave');
 							setTimeout(function() {
@@ -122,10 +120,6 @@
 				})
 			}
 		}
-		var unShown = notiList.filter(function(noti) {
-			return noti.shown === false
-		})
-		console.log(unShown)
 		$(document).ready(function() {
 			$('.button').click(function(){
 				notiList.push(new Noti());
@@ -133,19 +127,14 @@
 				notiCount++;
 			})
 			setInterval(function() {
-				if ($('.noti-container').children().length < 3 && notiList.length > 0){
-					for (i=0;i<notiList.length; i++) {
-						if ($('.noti-container').children().length < 3 && !notiList[i].shown){
-							var notiId = notiList[i].id
-							$('.noti-container').append('<div id="noti-'+notiList[i].id+'" class="noti"><h1>'+notiList[i].name+'</h1></div>');
-							$('#noti-'+notiList[i].id).click(function() {
-								$(this).remove();
-							})
-							notiList[i].shown = true;
-							notiList[i].expire()
-							// expire("#noti-"+notiList[i].id)
-						}
-					}
+				var unShown = notiList.filter(x => !x.shown)
+				if ($('.noti-container').children().length < 3 && unShown.length){
+					$('.noti-container').append('<div id="noti-'+unShown[0].id+'" class="noti"><h1>'+unShown[0].name+'</h1></div>');
+					unShown[0].shown = true;
+					unShown[0].expire()
+					$('#noti-'+unShown[0].id).click(function() {
+						$(this).remove();
+					})
 				}
 			}, 500)
 	    })
