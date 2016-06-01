@@ -15,16 +15,16 @@
 	.button {
 		margin: 20px;
 		padding: 10px;
-	    background-color: #5bc0de;
-	    border: 2px solid #46b8da;
+	    background-color: #ccc;
+	    border: 2px solid #aaa;
 	    border-radius: 10px;
 		color: #fff;-webkit-transition: ease 0.5s;
 		-o-transition: ease 0.5s;
 		transition: ease 0.5s;
 	}
 	.button:hover {
-	    background-color: #71c8e3;
-	    border: 2px solid #5bc0de;
+	    background-color: #ddd;
+	    border: 2px solid #ccc;
 	}
 	.button:focus {
 		outline: 0;
@@ -51,6 +51,11 @@
 	    -webkit-transition: ease 1.5s;
 	    -o-transition: ease 1.5s;
 	    transition: ease 1.5s;
+	}
+	.noti.female {
+	    color: #fff;
+	    background-color: #de5b7f;
+	    border: 2px solid #da466e;
 	}
 	.noti.pause {
 		background-color: #9cd9eb;
@@ -88,34 +93,25 @@
 		var Noti = function() {
 			this.id = notiCount;
 			this.name = getPerson().name.first;
+			this.gender = getPerson().gender;
 			this.shown = false;
 			this.expire = function() {
 				var timer = 6
 				var id = this.id
 				var clear = setInterval(function() {
-					if (timer > 2 || !( $('#noti-'+id).hasClass("pause") )) {
-						if (timer > 0) {
-							timer -- ;
-							console.log (id+" "+timer);
-						} else if (timer <= 2 && ( $('#noti-'+id).hasClass("pause") )) {
-							console.log ('paused')
-						} else {
-							$('#noti-'+id).addClass('leave');
-							setTimeout(function() {
-								$('#noti-'+id).remove();
-							},1400)
+					timer > 2 || !( $('#noti-'+id).hasClass("pause") ) ? (
+						timer > 0 ? timer -- : (
+							$('#noti-'+id).addClass('leave'),
+							setTimeout(function() { $('#noti-'+id).remove() },1400),
 							clearInterval(clear)
-							console.log('remove')
-						};
-					}
+						)
+					) : null
 				}, 1000)
 				$('#noti-'+id).hover(function(){
 					$(this).addClass('pause')
 				})
 				$('#noti-'+id).mouseleave(function(){
-					if (timer <= 2) {
-						timer = 2
-					}
+					timer <= 2 ? timer = 2 :
 					$('#noti-'+id).removeClass('pause')
 				})
 			}
@@ -129,7 +125,7 @@
 			setInterval(function() {
 				var unShown = notiList.filter(x => !x.shown)
 				if ($('.noti-container').children().length < 3 && unShown.length){
-					$('.noti-container').append('<div id="noti-'+unShown[0].id+'" class="noti"><h1>'+unShown[0].name+'</h1></div>');
+					$('.noti-container').append('<div id="noti-'+unShown[0].id+'" class="noti '+unShown[0].gender+'"><h1>'+unShown[0].name+'</h1></div>');
 					unShown[0].shown = true;
 					unShown[0].expire()
 					$('#noti-'+unShown[0].id).click(function() {
