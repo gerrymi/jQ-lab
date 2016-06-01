@@ -93,7 +93,7 @@
 				var timer = 6
 				var id = this.id
 				var clear = setInterval(function() {
-					timer > 2 || !( $('#noti-'+id).hasClass("pause") ) ? (
+					timer > 2 || !$('#noti-'+id).hasClass("pause") ? (
 						timer > 0 ? timer -- : (
 							$('#noti-'+id).addClass('leave'),
 							setTimeout(function() { $('#noti-'+id).remove() },1400),
@@ -129,6 +129,5 @@
 			}, 500)
 	    })
 	</script>
-	<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
 </body>
 </html>
