@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
+</head>
+<body>
+	<div contenteditable></div>
+	<div id="box-1">
+		<h1>box-1</h1>
+	</div>
+	<div id="box-2">
+		<h2>box-2</h2>
+	</div>
+	<div id="box-3">
+		<h3>box-3</h3>
+	</div>
+	<div id="box-4">
+		<h4>box-4</h4>
+	</div>
+	<div id="box-5">
+		<h5>box-5</h5>
+	</div>
+	<script>
+		var boxCount = 1
+		var boxMax = 6
+		$(window).on("paste", function(e) {
+		    $.each(e.originalEvent.clipboardData.items, function() {
+		        this.getAsString(function(str) {
+		            var toPaste = str.split('<')[0]
+		            if (boxCount <= boxMax) {
+		            	$('#box-'+boxCount).append('<p>'+toPaste+'</p>')
+		            	boxCount++
+		            	if (boxCount == boxMax) {
+		            		alert ('Job Done!')
+		            	}
+		            } 
+		        });
+		    });
+		});
+	</script>
+</body>
+</html>
