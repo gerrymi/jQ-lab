@@ -52,11 +52,6 @@
 	    -o-transition: ease 1.5s;
 	    transition: ease 1.5s;
 	}
-	.noti.female {
-	    color: #fff;
-	    background-color: #de5b7f;
-	    border: 2px solid #da466e;
-	}
 	.noti.pause {
 		background-color: #9cd9eb;
 	}
@@ -93,7 +88,6 @@
 		var Noti = function() {
 			this.id = notiCount;
 			this.name = getPerson().name.first;
-			this.gender = getPerson().gender;
 			this.shown = false;
 			this.expire = function() {
 				var timer = 6
@@ -125,7 +119,7 @@
 			setInterval(function() {
 				var unShown = notiList.filter(x => !x.shown)
 				if ($('.noti-container').children().length < 3 && unShown.length){
-					$('.noti-container').append('<div id="noti-'+unShown[0].id+'" class="noti '+unShown[0].gender+'"><h1>'+unShown[0].name+'</h1></div>');
+					$('.noti-container').append('<div id="noti-'+unShown[0].id+'" class="noti"><h1>'+unShown[0].name+'</h1></div>');
 					unShown[0].shown = true;
 					unShown[0].expire()
 					$('#noti-'+unShown[0].id).click(function() {
