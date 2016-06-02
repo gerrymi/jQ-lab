@@ -74,8 +74,8 @@
 	</div>
 
 	<script>
-		var getPerson = function() {
-			var jqXHR = []
+		let getPerson = function() {
+			let jqXHR = []
 			jqXHR.push ($.ajax({
 			  url: 'https://randomuser.me/api/',
 			  dataType: 'json',
@@ -83,16 +83,16 @@
 			}))
 			return jqXHR[0].responseJSON.results[0];
 		}
-		var notiList = [];
-		var notiCount = 0;
-		var Noti = function() {
+		let notiList = [];
+		let notiCount = 0;
+		let Noti = function() {
 			this.id = notiCount;
 			this.name = getPerson().name.first;
 			this.shown = false;
 			this.expire = function() {
-				var timer = 6
-				var id = this.id
-				var clear = setInterval(function() {
+				let timer = 6
+				let id = this.id
+				let clear = setInterval(function() {
 					timer > 2 || !$('#noti-'+id).hasClass("pause") ? (
 						timer > 0 ? timer -- : (
 							$('#noti-'+id).addClass('leave'),
@@ -117,7 +117,7 @@
 				notiCount++;
 			})
 			setInterval(function() {
-				var unShown = notiList.filter(x => !x.shown)
+				let unShown = notiList.filter(x => !x.shown)
 				if ($('.noti-container').children().length < 3 && unShown.length){
 					$('.noti-container').append('<div id="noti-'+unShown[0].id+'" class="noti"><h1>'+unShown[0].name+'</h1></div>');
 					unShown[0].shown = true;
@@ -126,7 +126,7 @@
 						$(this).remove();
 					})
 				}
-			}, 500)
+			}, 700)
 	    })
 	</script>
 </body>
