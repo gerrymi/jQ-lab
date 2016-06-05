@@ -74,21 +74,19 @@
 	</div>
 
 	<script>
-		let getPerson = function() {
-			let jqXHR = []
-			jqXHR.push ($.ajax({
-			  url: 'https://randomuser.me/api/',
-			  dataType: 'json',
-			  async: false
-			}))
-			return jqXHR[0].responseJSON.results[0];
-		}
 		let notiList = [];
 		let notiCount = 0;
-		let Noti = function() {
+		let getHuman = function() {
+			let human = fetch('https://randomuser.me/api/')
+				.then(res => res.json())
+				.then(json => {
+					notiList.push(new Noti(json.results[0]))
+					notiCount++;
+				})
+		}
+		let Noti = function(res) {
+			this.res = res
 			this.id = notiCount;
-			this.name = getPerson().name.first;
-			this.shown = false;
 			this.expire = function() {
 				let timer = 6
 				let id = this.id
@@ -112,21 +110,19 @@
 		}
 		$(document).ready(function() {
 			$('.button').click(function(){
-				notiList.push(new Noti());
-				console.log(notiList[notiCount]);
-				notiCount++;
+				getHuman()
 			})
 			setInterval(function() {
 				let unShown = notiList.filter(x => !x.shown)
 				if ($('.noti-container').children().length < 3 && unShown.length){
-					$('.noti-container').append('<div id="noti-'+unShown[0].id+'" class="noti"><h1>'+unShown[0].name+'</h1></div>');
+					$('.noti-container').append('<div id="noti-'+unShown[0].id+'" class="noti"><h1>'+unShown[0].res.name.first+'</h1></div>');
 					unShown[0].shown = true;
 					unShown[0].expire()
 					$('#noti-'+unShown[0].id).click(function() {
 						$(this).remove();
 					})
 				}
-			}, 700)
+			}, 600)
 	    })
 	</script>
 </body>
